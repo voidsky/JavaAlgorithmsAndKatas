@@ -17,26 +17,43 @@ import static org.junit.Assert.*;
  * @author namai
  */
 public class GameTest {
-    @Test
-    public void canMakeGame() {
-        new Game();
-    }
     
-    @Test
-    public void canRollBall() {
-        Game game = new Game();
-        game.Roll(0);                
+    private Game game;
+        
+    @Before
+    public void setUp(){
+        game = new Game();
     }
     
     @Test
     public void canScoreGutterGame() {
-        Game game = new Game();
-        for (int i = 0; i < 20; i++) {
-            game.Roll(0);
-        }
+        game.Roll(0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0 );
         assertThat(game.Score(), is(0));
-        
+    }
+
+    @Test
+    public void canScoreGameOfOnes() {
+        game.Roll(1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1);
+        assertThat(game.Score(), is(20));
     }
     
+    @Test
+    public void canScoreSpareWollowedByThree() {
+        game.Roll(5,5, 3,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0);
+        assertThat(game.Score(), is(16));
+    }
     
+    @Test
+    public void canScoreScoreStrikeFollowdByThreethenThree() {
+        game.Roll(10, 3,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0);
+        assertThat(game.Score(), is(16));
+    }
+    
+    @Test
+    public void canScorePerfectGame() {
+        game.Roll(10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 );
+        assertThat(game.Score(), is(300));
+    }
+    
+      
 }
